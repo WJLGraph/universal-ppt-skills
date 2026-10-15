@@ -67,8 +67,8 @@
 
 把开发方法沉淀为可复用、可分发的 agent 技能并开源。
 
-- **Haute · 高端 GSAP Skills**：蒸馏 GSAP 官方 skills，产出 6 大风格体系 + 12 动效模式 + 10 节引擎纪律 + 12+ 即贴配方，四路分发（skills CLI / Claude / Cursor / Copilot）全部合规打通（MIT）；
-- **Universal PPT · 全场景演示技能**：蒸馏 17 个开源 PPT skill，建成六类场景路由 × 30+ 风格库 × 8 条渲染路径 + 内容—视觉—溯源三道质检闸的演示文稿生成系统（MIT）。
+- **Haute · 高端 GSAP Skills**：提炼 GSAP 官方 skills，产出 6 大风格体系 + 12 动效模式 + 10 节引擎纪律 + 12+ 即贴配方，四路分发（skills CLI / Claude / Cursor / Copilot）全部合规打通（MIT）；
+- **Universal PPT · 全场景演示技能**：提炼 17 个开源 PPT skill，建成六类场景路由 × 30+ 风格库 × 8 条渲染路径 + 内容—视觉—溯源三道质检闸的演示文稿生成系统（MIT）。
 
 ### 6. 算法复现与工程落地（2026.01 — 02）
 
@@ -89,7 +89,7 @@
 | Agent 编排规模 | LangGraph **8 节点**（并行 fan-out + HITL） |
 | 红队判定体系 | **四级**防御判定 + defense_score 量化 |
 | 大屏功能沉淀 | 17 项功能演示 · Gitee ★ 3 |
-| 技能蒸馏 | 17 个开源 skill → 6 场景 × 30+ 风格 × 8 渲染路径 |
+| 技能提炼 | 17 个开源 skill → 6 场景 × 30+ 风格 × 8 渲染路径 |
 | 开源仓库 | GitHub / Gitee @WJLGraph · 17+ 公开仓库 |
 
 ---

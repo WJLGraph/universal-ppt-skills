@@ -1,6 +1,27 @@
 # 两阶段 Prompt 模板库
 
-> Stage 1→2 用模板一（素材→大纲），用户确认后 Stage 4 用模板二（大纲→PPT）。可整段复制使用，方括号处按需替换。
+> Stage 1→2 用模板一（素材→大纲），**停下等用户确认**，Stage 4 用模板二（大纲→PPT）。可整段复制使用，方括号处按需替换。
+
+## 阶段检查点总表（每阶段收尾照做，缺一项即视为流程违规）
+
+| 阶段 | 收尾必做 | 是否 STOP-AND-WAIT | 物证文件 |
+| --- | --- | --- | --- |
+| 1 素材拆解 | 术语台账 + 主张清单（论断/证据位置/强度） | 否（但模糊需求要先问清受众/场合/页数） | 主张清单 |
+| 2 大纲设计 | action title 串 + ghost deck 测试 + 页面类型 | **是**：把大纲发给用户，等确认才往下 | `work/deck-spec.json` 的 `outline_confirmed` + `confirm_evidence` |
+| 3 视觉系统 | 2-3 个风格候选 + 推荐理由 + 视觉规格卡 | **是**：等用户锁定风格 | `deck-spec.json` 的 `style_name` + `style_confirmed` |
+| 4 渲染 | 跑 `scripts/crop_paper_figs.py`（论文 deck，顺带产出论文图片清单）+ 出片 + 跑 `scripts/deck_qa.py` | 否 | `work/figures.json` + `work/paper-figures.json` + `work/qa_output.txt` |
+| 5 质检交付 | 渲图逐页目检（分级）→ 修一版复检一版 → 交付证据块 | 否 | 缺陷清单 + `qa_output.txt` 原文 |
+
+## 降级协议（用户说"我只要最后结果 / 直接做 / 别问我"时）
+
+不许因此跳过大纲与风格确认，改成分离成**一条消息**发出：
+
+```text
+页面级大纲（每页 action title + 页面类型）+ 风格候选 2-3 个（各一句理由 + 我推荐哪个）+ 我按 X 执行。
+—— 随后直接进入 Stage 4/5，交付时附完整 QA 证据块。
+```
+
+要点：① 大纲与风格候选**合并成一条**消息，不是分成两轮等待；② 声明"我按哪个执行"，用户可低成本纠正；③ **R0 铁律与 G 级门禁的证据块在任何情况下都不可豁免**。
 
 ## 模板一：素材精读 → 汇报大纲（先要大纲，不要直接生成 PPT）
 
@@ -23,10 +44,13 @@
 - 不要编造素材中没有的内容；
 - 关键结论尽量标注来源位置（章节/图表）；
 - 每页标题写成结论句（action title），而不是章节名；
+- **输出大纲后就停下等我确认，不要顺手开始生成 PPT**（这是两阶段铁律，跳过要返工）；
 - 输出要适合后续直接生成中文汇报 PPT。
 ```
 
 ## 模板二：大纲 → PPT（已确认大纲后）
+
+> 前置条件：大纲已由用户确认。本模板第 2 条会再触发一次**风格确认门**——风格没锁定前不要开始写渲染代码，先给候选、等一句确认。
 
 ```text
 请基于上面确认的汇报大纲，生成一份 N 页 PPT。
@@ -41,7 +65,12 @@
 7. 两个高密度页之间插入喘息页（大字结论或分节页）；
 8. 为每一页添加 80-120 字中文讲稿；
 9. 图表遵循顶刊风格：细线、低饱和、直接标注、涨红跌绿；
-10. 输出 [PPTX/HTML/PDF]，渲染路径按我的需求选择。
+10. 若素材含论文：**素材里已有的图必须上片**——用 `scripts/crop_paper_figs.py` 从 PDF 裁原文图（zoom≥3，逐张目检清晰度），**原文有图却不用、或用自绘图/AI 生图/图标顶替原文图表 = 违规**；图下加 citation（作者·venue·年份·Figure x），并把每张图登记进 `work/figures.json`；该脚本同时会产出 `work/paper-figures.json`（论文本来有哪些 Figure）。**逐条对照该清单**：上片不了的 Figure 必须在 `work/deck-spec.json` 的 `unused_figures_reason` 里写清理由（≥8 字）；素材确实没有对应图时才允许自造图，自造图须是真实图片文件（形状拼装不算）、`figures.json` 登记 `source_type=self-made` + `reason`、页内标「来源：自绘」。所有数字上片前与原文逐一核对并记 Table/Figure 号；
+11. 生成脚本必须打印：页数、每页讲稿 len()（80-120 字）；
+12. 出片后**必须跑门禁脚本**并把原始输出贴出来：
+    `python scripts/deck_qa.py <deck.pptx> --spec work/deck-spec.json --figures work/figures.json --paper-figures work/paper-figures.json --mode A --out work/qa_output.txt`
+    有 FAIL 先修到全 PASS（含 G15"原文图有没有被漏用/自绘有没有顶替原图"）；再渲图逐页目检（文字溢出→重叠→对齐→边距→对比度）；
+13. 交付时附交付证据块（照 references/delivery-template.md 填空），逐条核对 SKILL.md §0 十条铁律。
 ```
 
 ## 模板三：要求套用学校/企业模板时
@@ -107,4 +136,32 @@
 3. 视觉母题：一个贯穿全 deck 的复用元素（如圆角卡片/圆底图标/特定图形语言）；
 4. 明暗基调：深浅三明治（深色封面+浅色内容）或全深/全浅。
 我的主题是[主题]，情绪关键词是[关键词]。确认后把这套规格写入视觉规格卡并全 deck 执行。
+```
+
+## 模板九：门禁执行话术（出片后自跑，把原始输出贴给用户）
+
+```text
+出片后请按顺序执行并原样贴出输出，不许概括、不许"已检查过的"：
+1. python scripts/crop_paper_figs.py --pdf [论文.pdf] --out work/fig --manifest work/figures.json    # 仅论文 deck，会顺带产出 work/paper-figures.json
+2. python scripts/deck_qa.py [成品.pptx] --spec work/deck-spec.json --figures work/figures.json --paper-figures work/paper-figures.json --mode A --out work/qa_output.txt
+3. 若有 FAIL：逐条说明修了什么、重跑一遍，直到全 PASS；WARN 项说明为何可接受。G15 报"论文已有 Figure X 未使用"时，要么补上该原图，要么在 deck-spec.json 的 unused_figures_reason 里写理由——不许靠删清单蒙混（清单是脚本扫 PDF 题注生成的）。
+4. 渲图逐页目检，缺陷按 high/medium/low 分级列出，high 必须全修。
+交付说明里附 deck-spec.json 的确认证据（用户原话）+ qa_output.txt 原文 + 每张图的来源（PDF 页码 / Figure 号 / 自绘与理由）+ 论文原图使用情况（上片/未上片及理由）。
+```
+
+## 模板十：规则自查（交付前逐条核对 SKILL.md §0 十条铁律）
+
+```text
+请对照 SKILL.md §0 的 10 条铁律逐条自查，每条给"符合 / 不符合 / 不适用"三选一 + 一句证据：
+1 两阶段铁律（大纲与风格都经确认，证据=用户原话）
+2 论文原图优先铁律（素材有图必须上片；无手画/AI/图标顶替原文图；自造图有 reason 且标"来源：自绘"）
+3 图片来源可溯源（figures.json 齐全、台账文件存在且哈希自洽）
+4 图文并茂数值门禁（视觉页占比、连续非视觉页、视觉锚点；形状色块不算）
+5 数字逐一核对（每个数字有 Table/Figure 出处）
+6 讲稿 80-120 字（脚本输出为准）
+7 QA 证据块（含渲染预览可用性声明）
+8 action title（只读标题能讲通全篇）
+9 视觉反模式清零（design-language §6 逐项）
+10 中文去模板化（design-language §7 逐条，脚本已扫）
+任何一条"不符合"都必须先修，再重新自查一遍。
 ```
