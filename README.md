@@ -61,7 +61,7 @@
 | Kimi-K3 | <img src="docs/benchmark/slides/Kimi_itransformer_p06.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p07.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p08.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p09.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p10.png?v=2" width="200"/> |
 | LongCat-2.5-Preview | <img src="docs/benchmark/slides/LongCat_itransformer_p06.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p07.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p08.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p09.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p10.png?v=2" width="200"/> |
 
-> 同一篇论文：DS / Kimi / GLM 的页面大量嵌入论文原图并配 in-slide citation；**LongCat 只有 2 个原生图表、0 张论文原图**——这正是 G15 要拦的情形。deck 原文件在 [example/](example/) 目录。
+> 同一篇论文：DS / Kimi / GLM 的页面大量嵌入论文原图并配 in-slide citation；**LongCat 只有 2 个原生图表、0 张论文原图**——这正是 G15 要拦的情形。
 
 ## 实测基准：8 份 deck 横评
 
@@ -131,9 +131,7 @@ universal-ppt-skills/
 │   ├── deck_qa.py              # 单入口门禁：G1-G15 全自动判定，FAIL→exit 1
 │   └── crop_paper_figs.py      # 论文原图裁切 + figures.json 溯源台账
 │                               #   + paper-figures.json 论文图片清单
-├── docs/                       # 素材与基准图（论文 PDF、个人档案）
-│   └── benchmark/              # 实测基准：四联对比图 + 80 页全量截图
-└── example/                    # 8 份实验产物（4 模型 × 2 主题）
+└── docs/                       # 素材与基准图（个人档案、benchmark 全量截图）
 ```
 
 ## 快速开始

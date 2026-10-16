@@ -55,7 +55,7 @@ The same source material ([personal profile](docs/personal-profile.md) + the iTr
 | Kimi-K3 | <img src="docs/benchmark/slides/Kimi_itransformer_p06.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p07.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p08.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p09.png?v=2" width="200"/> | <img src="docs/benchmark/slides/Kimi_itransformer_p10.png?v=2" width="200"/> |
 | LongCat-2.5-Preview | <img src="docs/benchmark/slides/LongCat_itransformer_p06.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p07.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p08.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p09.png?v=2" width="200"/> | <img src="docs/benchmark/slides/LongCat_itransformer_p10.png?v=2" width="200"/> |
 
-> Same paper: DS / Kimi / GLM pages embed original paper figures with in-slide citations; **LongCat has only 2 native charts and 0 paper figures** — exactly what gate G15 is designed to catch. Deck files live in [example/](example/).
+> Same paper: DS / Kimi / GLM pages embed original paper figures with in-slide citations; **LongCat has only 2 native charts and 0 paper figures** — exactly what gate G15 is designed to catch.
 
 ## Benchmark: 8 Decks
 
