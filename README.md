@@ -1,3 +1,7 @@
+<div align="center">
+
+<img src="docs/logo.png" width="130" alt="universal-ppt-skill logo"/>
+
 # universal-ppt-skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -6,6 +10,8 @@
 [![Deck](https://img.shields.io/badge/example%20decks-8-orange)](#实测基准8-份-deck-横评)
 
 **中文** | [English](README_EN.md)
+
+</div>
 
 **一个模型无关的通用 PPT 生成 Skill。** 把「AI 生成 PPT」最常见的三类翻车——**全是文字、图片来源不可信、流程不透明**——从"靠模型自觉"变成"机器判死的门禁 + 落盘的物证"。
 
